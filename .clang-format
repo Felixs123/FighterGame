@@ -1,0 +1,32 @@
+# Format Style Options - Created with Clang Power Tools
+---
+Language: Cpp
+Standard: c++20
+BasedOnStyle: GNU
+
+# Use spaces instead of tabs
+UseTab: Never
+
+# Use a tab size of 3 spaces
+TabWidth: 3
+
+# Indent width
+IndentWidth: 3
+
+# Column limit
+ColumnLimit: 78
+
+AccessModifierOffset: -3
+ConstructorInitializerIndentWidth: 3
+ContinuationIndentWidth: 3
+
+PointerAlignment: Right
+
+AlignTrailingComments: true
+
+SpaceBeforeParens: Never
+
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks : Always
+
+SortIncludes: false
