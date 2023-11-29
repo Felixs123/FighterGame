@@ -13,6 +13,8 @@ class AFighterGameGameMode : public AGameModeBase
 
 public:
 	AFighterGameGameMode();
+   virtual void BeginPlay() override;
+   void Spawn();
 };
 
 
