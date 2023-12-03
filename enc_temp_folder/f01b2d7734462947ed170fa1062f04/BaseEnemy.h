@@ -22,8 +22,6 @@ class FIGHTERGAME_API ABaseEnemy : public ACharacter
 public:
    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Enemy")
    EEnemyState CurrentState;
-
-
    int health; 
    int attackRadius; 
 	// Sets default values for this character's properties
@@ -34,7 +32,6 @@ public:
    class AFighterGameGameMode *MyGameMode;
 
    void Patrol();
-   UFUNCTION(BlueprintCallable, Category = "Attack")
    void AttackPlayer();
    void Death();
 

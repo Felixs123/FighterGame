@@ -24,17 +24,9 @@ ABaseEnemy::Patrol()
 
    if(PlayerPawn)
       {
-
          // Calculate the direction from the enemy to the player
          FVector DirectionToPlayer = PlayerPawn->GetActorLocation() - GetActorLocation();
          float DistanceToPlayer = DirectionToPlayer.Size();
-
-          if(DistanceToPlayer <= attackRadius)
-            {
-               // Transition to the Attack state
-               CurrentState = EEnemyState::Attack;
-            }
-
          DirectionToPlayer.Normalize();
          // Set the enemy's rotation to face the player
          FRotator NewRotation = DirectionToPlayer.Rotation();
@@ -58,24 +50,36 @@ ABaseEnemy::Patrol()
          
          UE_LOG(LogTemp, Warning, TEXT("Distance %f"), DistanceToPlayer);
          // Check if the enemy is within the attack radius
-        
+         if(DistanceToPlayer <=attackRadius)
+         {
+             // Transition to the Attack state
+             CurrentState = EEnemyState::Attack;
+         }
       }
 }
 
 void
 ABaseEnemy::AttackPlayer()
 {
+   // Get a reference to the player pawn
    AActor *PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+   // Calculate the direction from the enemy to the player
    FVector DirectionToPlayer
       = PlayerPawn->GetActorLocation() - GetActorLocation();
    float DistanceToPlayer = DirectionToPlayer.Size();
 
+   UE_LOG(LogTemp, Warning, TEXT("Player Location: %s"),
+          *PlayerPawn->GetActorLocation().ToString());
+   UE_LOG(LogTemp, Warning, TEXT("Enemy Location: %s"),
+          *GetActorLocation().ToString());
+   UE_LOG(LogTemp, Warning, TEXT("DirectionToPlayer: %s"),
+          *DirectionToPlayer.ToString());
+   UE_LOG(LogTemp, Warning, TEXT("Distance %f"), DistanceToPlayer);
    if(DistanceToPlayer >= attackRadius)
       {
+         // Transition to the Attack state
          CurrentState = EEnemyState::Patrol;
-         return;
       }
-
 }
 
 void
@@ -105,7 +109,7 @@ ABaseEnemy::Tick(float DeltaTime)
          Patrol();
          break;
       case EEnemyState::Attack:
-         //case is in blueprint
+         AttackPlayer();
          break;
       case EEnemyState::Death:
          Death();
