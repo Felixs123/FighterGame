@@ -11,14 +11,14 @@ ABaseEnemy::ABaseEnemy()
    // Set this character to call Tick() every frame.  You can turn this off to
    // improve performance if you don't need it.
    PrimaryActorTick.bCanEverTick = true;
-
+   MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
 }
 
 // Called when the game starts or when spawned
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
+   UE_LOG(LogTemp, Warning, TEXT("From Base Enemies: %d"), MyGameMode->numOfEnemies);
 }
 
 // Called every frame

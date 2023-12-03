@@ -12,11 +12,13 @@ class FIGHTERGAME_API ABaseEnemy : public ACharacter
 	GENERATED_BODY()
 
 public:
+
    int health; 
 	// Sets default values for this character's properties
 	ABaseEnemy();
    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
    class USphereComponent *AttackRadius;
+   class AFighterGameGameMode *MyGameMode;
 
 protected:
 	// Called when the game starts or when spawned
