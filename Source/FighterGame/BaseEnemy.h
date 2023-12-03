@@ -6,19 +6,33 @@
 #include "GameFramework/Character.h"
 #include "BaseEnemy.generated.h"
 
+UENUM(BlueprintType)
+enum class EEnemyState : uint8
+{
+   Patrol UMETA(DisplayName = "Patrol"),
+   Attack UMETA(DisplayName = "Attack"),
+   Death UMETA(DisplayName = "Death")
+};
+
 UCLASS()
 class FIGHTERGAME_API ABaseEnemy : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-
+   EEnemyState CurrentState;
    int health; 
+   int attackRadius; 
 	// Sets default values for this character's properties
 	ABaseEnemy();
+
    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
    class USphereComponent *AttackRadius;
    class AFighterGameGameMode *MyGameMode;
+
+   void Patrol();
+   void AttackPlayer();
+   void Death();
 
 protected:
 	// Called when the game starts or when spawned

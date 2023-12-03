@@ -20,18 +20,14 @@ AFighterGameGameMode::AFighterGameGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Hello")); 
-    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
 
 }
 
 void
 AFighterGameGameMode::BeginPlay()
 {
-    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
    Spawn();
-    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
-   GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
+   //GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
 }
 
 void
