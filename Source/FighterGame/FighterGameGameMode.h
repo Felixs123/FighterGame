@@ -19,6 +19,7 @@ public:
 	AFighterGameGameMode();
    virtual void BeginPlay() override;
    void Spawn();
+   static int32 numOfEnemies; 
 };
 
 

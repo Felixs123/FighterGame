@@ -8,6 +8,7 @@
 #include "BaseEnemy.h"
 #include "FloatingActor.h"
 
+int32 AFighterGameGameMode::numOfEnemies = 0;
 
 AFighterGameGameMode::AFighterGameGameMode()
 {
@@ -19,6 +20,7 @@ AFighterGameGameMode::AFighterGameGameMode()
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Hello")); 
+
 }
 
 void
@@ -44,6 +46,15 @@ AFighterGameGameMode::Spawn()
             return;
          }
 
+      if(numOfEnemies > 2)
+         {
+            return;
+         }
+      else
+      {
+            numOfEnemies++;
+            UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
+      }
       FVector SpawnLocation;
       FCollisionQueryParams CollisionParams;
 
@@ -52,7 +63,7 @@ AFighterGameGameMode::Spawn()
             UE_LOG(LogTemp, Warning, TEXT("Creature not spawned"));
 
             // Define the spawn radius around the player
-            float SpawnRadius = 500.0f;
+            float SpawnRadius = 2000.0f;
 
             // Calculate a random spawn location within the radius
             FVector2D SpawnLocation2D = FMath::RandPointInCircle(SpawnRadius);

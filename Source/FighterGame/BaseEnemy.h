@@ -15,6 +15,8 @@ public:
    int health; 
 	// Sets default values for this character's properties
 	ABaseEnemy();
+   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+   class USphereComponent *AttackRadius;
 
 protected:
 	// Called when the game starts or when spawned
