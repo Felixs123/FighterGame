@@ -18,7 +18,8 @@ AFighterGameGameMode::AFighterGameGameMode()
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Hello")); 
-    
+    // Set up the timer in the constructor GetWorldTimerManager().SetTimer(
+   GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 5.0f, true);
 }
 
 void
@@ -39,23 +40,37 @@ AFighterGameGameMode::Spawn()
       return;
    }
 
-   // Define the spawn radius around the player
-   float SpawnRadius = 100.0f;
-
-   // Calculate a random spawn location within the radius
-   FVector2d SpawnLocation2D = FMath::RandPointInCircle(SpawnRadius);
-   FVector SpawnLocation = FVector(SpawnLocation2D.X, SpawnLocation2D.Y, 100.0f) + PlayerPawn->GetActorLocation();
-
-   //Check if colliding
+   FVector SpawnLocation;
    FCollisionQueryParams CollisionParams;
-   CollisionParams.AddIgnoredActor(PlayerPawn);
+   do
+   {
+      UE_LOG(LogTemp, Warning, TEXT("Creature not spawned"));
+      // Define the spawn radius around the player
+      float SpawnRadius = 500.0f;
 
-   //if(!GetWorld()->LineTraceTestByChannel(PlayerPawn->GetActorLocation(), SpawnLocation, ECC_Visibility, CollisionParams))
-   //{
+      // Calculate a random spawn location within the radius
+      FVector2d SpawnLocation2D = FMath::RandPointInCircle(SpawnRadius);
+      SpawnLocation = FVector(SpawnLocation2D.X, SpawnLocation2D.Y, 0.0f) + PlayerPawn->GetActorLocation();
+
+      // Check if colliding
+      
+      CollisionParams.AddIgnoredActor(PlayerPawn);
+   }
+   while(GetWorld()->LineTraceTestByChannel(PlayerPawn->GetActorLocation(),
+                                            SpawnLocation, ECC_Visibility,
+                                            CollisionParams));
+   
+
+   if(!GetWorld()->LineTraceTestByChannel(PlayerPawn->GetActorLocation(), SpawnLocation, ECC_Visibility, CollisionParams))
+   {
       // Spawn the creature
        
-      ABaseEnemy *NewCreature = GetWorld()->SpawnActor<ABaseEnemy>(ABaseEnemy::StaticClass(), SpawnLocation, FRotator::ZeroRotator);
+      ABaseEnemy *NewCreature = GetWorld()->SpawnActor<ABaseEnemy>(baseEnemy, SpawnLocation, FRotator::ZeroRotator);
       UE_LOG(LogTemp, Warning, TEXT("Creature spawned at X: %f, Y: %f, Z: %f"), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z); 
 
-   //}
+   }
+   else
+   {
+      UE_LOG(LogTemp, Warning, TEXT("Creature not spawned")); 
+   }
 }
