@@ -2,6 +2,8 @@
 
 
 #include "BaseEnemy.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()
@@ -21,7 +23,30 @@ void ABaseEnemy::BeginPlay()
 // Called every frame
 void ABaseEnemy::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+   Super::Tick(DeltaTime);
+
+   // Get a reference to the player pawn
+   AActor *PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+
+   if(PlayerPawn)
+      {
+         // Calculate the direction from the enemy to the player
+         FVector DirectionToPlayer
+            = PlayerPawn->GetActorLocation() - GetActorLocation();
+         DirectionToPlayer.Normalize();
+
+         // Set the enemy's rotation to face the player
+         FRotator NewRotation = DirectionToPlayer.Rotation();
+         SetActorRotation(NewRotation);
+
+         // Move the enemy towards the player
+         UCharacterMovementComponent *MovementComponent
+            = GetCharacterMovement();
+         if(MovementComponent)
+            {
+               MovementComponent->AddInputVector(DirectionToPlayer);
+            }
+      }
 
 }
 
