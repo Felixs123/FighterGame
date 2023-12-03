@@ -20,8 +20,12 @@ class FIGHTERGAME_API ABaseEnemy : public ACharacter
 	GENERATED_BODY()
 
 public:
+<<<<<<< HEAD
+
+=======
    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Enemy")
    EEnemyState CurrentState;
+>>>>>>> 15c1a9191dd200c7079921b4da8131fd24d2e0d7
 
 
    int health; 
@@ -32,11 +36,14 @@ public:
    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
    class USphereComponent *AttackRadius;
    class AFighterGameGameMode *MyGameMode;
+<<<<<<< HEAD
+=======
 
    void Patrol();
    UFUNCTION(BlueprintCallable, Category = "Attack")
    void AttackPlayer();
    void Death();
+>>>>>>> 15c1a9191dd200c7079921b4da8131fd24d2e0d7
 
 protected:
 	// Called when the game starts or when spawned

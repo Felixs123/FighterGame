@@ -20,14 +20,25 @@ AFighterGameGameMode::AFighterGameGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
+<<<<<<< HEAD
+	UE_LOG(LogTemp, Warning, TEXT("Hello")); 
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
+=======
+>>>>>>> 15c1a9191dd200c7079921b4da8131fd24d2e0d7
 
 }
 
 void
 AFighterGameGameMode::BeginPlay()
 {
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
    Spawn();
+<<<<<<< HEAD
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
+   GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
+=======
    //GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
+>>>>>>> 15c1a9191dd200c7079921b4da8131fd24d2e0d7
 }
 
 void
