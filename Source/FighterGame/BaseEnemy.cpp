@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
    PrimaryActorTick.bCanEverTick = true;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    CurrentState = EEnemyState::Patrol; 
-   attackRadius = 75;
+   attackRadius = 125;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    damage = 1; 
 }
@@ -122,19 +122,19 @@ void
 ABaseEnemy::NotifyHit(class UPrimitiveComponent *MyComp, AActor *Other, class UPrimitiveComponent *OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult &Hit)
 {
    
-   Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation,
-                    HitNormal, NormalImpulse, Hit);
-   UE_LOG(LogTemp, Warning, TEXT("attacked"));
-   // Check if the other actor is the player character
-   AFighterGameCharacter* PlayerCharacter = Cast<AFighterGameCharacter>(Other);
-   if(PlayerCharacter)
-   {
-         // Call TakeDamage on the player character
-         PlayerCharacter->LoseLife(damage);
+   //Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation,
+   //                 HitNormal, NormalImpulse, Hit);
+   //UE_LOG(LogTemp, Warning, TEXT("attacked"));
+   //// Check if the other actor is the player character
+   //PlayerCharacter = Cast<AFighterGameCharacter>(Other);
+   //if(PlayerCharacter)
+   //{
+   //      // Call TakeDamage on the player character
+   //      PlayerCharacter->LoseLife(damage);
 
-         // Implement additional logic here, e.g., enemy behavior after
-         // hitting the player
-   }
+   //      // Implement additional logic here, e.g., enemy behavior after
+   //      // hitting the player
+   
 }
 
 void

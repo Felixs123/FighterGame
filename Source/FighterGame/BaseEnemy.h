@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FighterGameCharacter.h"
 #include "GameFramework/Character.h"
 #include "BaseEnemy.generated.h"
 
@@ -28,6 +29,9 @@ public:
    int health;
    int damage;
    int attackRadius; 
+   UPROPERTY(BlueprintReadWrite, Category = "Player")
+   AFighterGameCharacter *PlayerCharacter;
+
 	// Sets default values for this character's properties
 	ABaseEnemy();
 
@@ -37,6 +41,10 @@ public:
    void Patrol();
    UFUNCTION(BlueprintCallable, Category = "Attack")
    void AttackPlayer();
+
+   UPROPERTY(BlueprintReadWrite, Category = "Player")
+   bool isHit;
+
    void Death();
 
 protected:
@@ -58,4 +66,5 @@ public:
                   FVector HitLocation, FVector HitNormal,
                   FVector NormalImpulse, const FHitResult &Hit) override;
 
+   FTimerHandle TimerHandle;
 };
