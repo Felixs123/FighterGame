@@ -11,6 +11,8 @@
 
 AFighterGameGameMode::AFighterGameGameMode()
 {
+   numOfEnemies = 0;
+
 	 //set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter"));
 	if (PlayerPawnBPClass.Class != NULL)
@@ -18,21 +20,28 @@ AFighterGameGameMode::AFighterGameGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
+
 	UE_LOG(LogTemp, Warning, TEXT("Hello")); 
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
+
+
 }
 
 void
 AFighterGameGameMode::BeginPlay()
 {
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
    Spawn();
+
+    UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
    GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
+
+   //GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
 }
 
 void
 AFighterGameGameMode::Spawn()
 {
-   UE_LOG(LogTemp, Warning, TEXT("Hello"));
-
    if(baseEnemy)
    {
       // Get a reference to the player pawn
@@ -41,8 +50,20 @@ AFighterGameGameMode::Spawn()
       // Handle the case where the player pawn is not found
       if(!PlayerPawn)
          {
+            UE_LOG(LogTemp, Warning, TEXT("Player pawn not found"));
             return;
          }
+
+      if(numOfEnemies > 2)
+         {
+            UE_LOG(LogTemp, Warning, TEXT("Num of enemies too high: %d"), numOfEnemies);
+            return;
+         }
+      else
+      {
+            numOfEnemies++;
+            UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
+      }
 
       FVector SpawnLocation;
       FCollisionQueryParams CollisionParams;
@@ -52,7 +73,7 @@ AFighterGameGameMode::Spawn()
             UE_LOG(LogTemp, Warning, TEXT("Creature not spawned"));
 
             // Define the spawn radius around the player
-            float SpawnRadius = 500.0f;
+            float SpawnRadius = 2000.0f;
 
             // Calculate a random spawn location within the radius
             FVector2D SpawnLocation2D = FMath::RandPointInCircle(SpawnRadius);
@@ -72,17 +93,10 @@ AFighterGameGameMode::Spawn()
             CollisionParams.AddIgnoredActor(PlayerPawn);
          }
       while(GetWorld()->LineTraceTestByChannel(PlayerPawn->GetActorLocation(),  SpawnLocation, ECC_Visibility, CollisionParams));
-
-      if(!GetWorld()->LineTraceTestByChannel(PlayerPawn->GetActorLocation(), SpawnLocation, ECC_Visibility, CollisionParams))
-         {
-            // Spawn the creature
-            ABaseEnemy *NewCreature = GetWorld()->SpawnActor<ABaseEnemy>( baseEnemy, SpawnLocation, FRotator::ZeroRotator);
-            UE_LOG(LogTemp, Warning, TEXT("Creature spawned at X: %f, Y: %f, Z: %f"), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
-         }
-      else
-         {
-            UE_LOG(LogTemp, Warning, TEXT("Creature not spawned"));
-         }
+      // Spawn the creature
+      ABaseEnemy *NewCreature = GetWorld()->SpawnActor<ABaseEnemy>( baseEnemy, SpawnLocation, FRotator::ZeroRotator);
+      UE_LOG(LogTemp, Warning, TEXT("Creature spawned at X: %f, Y: %f, Z: %f"), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
+         
    }
 }
 

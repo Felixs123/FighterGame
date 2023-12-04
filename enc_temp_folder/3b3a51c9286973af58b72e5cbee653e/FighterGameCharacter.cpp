@@ -69,12 +69,6 @@ void AFighterGameCharacter::BeginPlay()
 	}
 }
 
-void
-AFighterGameCharacter::LoseLife_Implementation(int damage)
-{
-}
-
-
 //////////////////////////////////////////////////////////////////////////
 // Input
 

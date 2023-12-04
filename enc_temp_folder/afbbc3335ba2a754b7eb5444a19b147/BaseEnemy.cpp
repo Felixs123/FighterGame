@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "FighterGameGameMode.h"
-#include "FighterGameCharacter.h"
 // Sets default values
 ABaseEnemy::ABaseEnemy()
 {
@@ -16,7 +15,6 @@ ABaseEnemy::ABaseEnemy()
    CurrentState = EEnemyState::Patrol; 
    attackRadius = 150;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
-   damage = 1; 
 }
 
 void
@@ -56,6 +54,11 @@ ABaseEnemy::Patrol()
          {
                UE_LOG(LogTemp, Warning, TEXT("Cry yourself to sleep"));
          }
+         //CONDITION TO GO INTO ATTACK
+         // Calculate the distance to the player
+         
+         UE_LOG(LogTemp, Warning, TEXT("Distance %f"), DistanceToPlayer);
+         // Check if the enemy is within the attack radius
         
       }
 }
@@ -85,7 +88,7 @@ ABaseEnemy::Death()
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-   //UE_LOG(LogTemp, Warning, TEXT("From Base Enemies: %d"), MyGameMode->numOfEnemies);
+   UE_LOG(LogTemp, Warning, TEXT("From Base Enemies: %d"), MyGameMode->numOfEnemies);
    //UE_LOG(LogTemp, Warning, TEXT("From Base Enemies: %d"), MyGameMode->numOfEnemies);
 }
 
@@ -94,8 +97,12 @@ void
 ABaseEnemy::Tick(float DeltaTime)
 {
    Super::Tick(DeltaTime);
+
+   UE_LOG(
+      LogTemp, Warning, TEXT("Current State: %d"),
+      static_cast<int32>(CurrentState)); // Implement a simple state machine
    switch(CurrentState)
-   {
+      {
       case EEnemyState::Patrol:
          Patrol();
          break;
@@ -108,7 +115,7 @@ ABaseEnemy::Tick(float DeltaTime)
 
       default:
          break;
-   }
+      }
 }
 
 // Called to bind functionality to input
@@ -116,23 +123,4 @@ void ABaseEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
-
-void
-ABaseEnemy::NotifyHit(class UPrimitiveComponent *MyComp, AActor *Other, class UPrimitiveComponent *OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult &Hit)
-{
-   
-   Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation,
-                    HitNormal, NormalImpulse, Hit);
-   UE_LOG(LogTemp, Warning, TEXT("attacked"));
-   // Check if the other actor is the player character
-   AFighterGameCharacter* PlayerCharacter = Cast<AFighterGameCharacter>(Other);
-   if(PlayerCharacter)
-   {
-         // Call TakeDamage on the player character
-         PlayerCharacter->LoseLife(damage);
-
-         // Implement additional logic here, e.g., enemy behavior after
-         // hitting the player
-   }
 }
