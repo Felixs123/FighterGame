@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
    PrimaryActorTick.bCanEverTick = true;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    CurrentState = EEnemyState::Patrol; 
-   attackRadius = 150;
+   attackRadius = 75;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    damage = 1; 
 }
