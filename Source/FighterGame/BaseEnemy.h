@@ -25,8 +25,9 @@ public:
    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Enemy")
    EEnemyState CurrentState;
 
-
+   UPROPERTY(BlueprintReadWrite, Category = "Player")
    int health;
+   UPROPERTY(BlueprintReadWrite, Category = "Player")
    int damage;
    int attackRadius; 
    UPROPERTY(BlueprintReadWrite, Category = "Player")

@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
    PrimaryActorTick.bCanEverTick = true;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    CurrentState = EEnemyState::Patrol; 
-   attackRadius = 125;
+   attackRadius = 75;
    MyGameMode = Cast<AFighterGameGameMode>(UGameplayStatics::GetGameMode(this));
    damage = 1; 
 }
@@ -103,7 +103,7 @@ ABaseEnemy::Tick(float DeltaTime)
          //case is in blueprint
          break;
       case EEnemyState::Death:
-         Death();
+         //case is in bp
          break;
 
       default:

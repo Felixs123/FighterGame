@@ -34,7 +34,7 @@ AFighterGameGameMode::BeginPlay()
    Spawn();
 
     UE_LOG(LogTemp, Warning, TEXT("%d"), numOfEnemies);
-   //GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
+   GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
 
    //GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &AFighterGameGameMode::Spawn, 10.0f, true);
 }
