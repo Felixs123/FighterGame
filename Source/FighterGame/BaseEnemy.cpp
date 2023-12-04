@@ -136,3 +136,11 @@ ABaseEnemy::NotifyHit(class UPrimitiveComponent *MyComp, AActor *Other, class UP
          // hitting the player
    }
 }
+
+void
+ABaseEnemy::OnHitDone()
+{
+   // Implement additional logic here, e.g., enemy behavior after hitting the
+   // player
+   UE_LOG(LogTemp, Warning,TEXT("Hit is done! Additional logic can be executed now."));
+}
