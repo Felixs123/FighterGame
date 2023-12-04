@@ -25,12 +25,13 @@ public:
    EEnemyState CurrentState;
 
 
-   int health;
-   int damage;
+   int health; 
    int attackRadius; 
 	// Sets default values for this character's properties
 	ABaseEnemy();
 
+   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+   class USphereComponent *AttackRadius;
    class AFighterGameGameMode *MyGameMode;
 
 
@@ -48,12 +49,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-   virtual void SetupPlayerInputComponent(
-      class UInputComponent *PlayerInputComponent) override;
-
-   void NotifyHit(UPrimitiveComponent *MyComp, AActor *Other,
-                  UPrimitiveComponent *OtherComp, bool bSelfMoved,
-                  FVector HitLocation, FVector HitNormal,
-                  FVector NormalImpulse, const FHitResult &Hit) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
