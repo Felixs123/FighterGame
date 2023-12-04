@@ -51,6 +51,8 @@ public:
    virtual void SetupPlayerInputComponent(
       class UInputComponent *PlayerInputComponent) override;
 
+   void OnHitDone();
+
    void NotifyHit(UPrimitiveComponent *MyComp, AActor *Other,
                   UPrimitiveComponent *OtherComp, bool bSelfMoved,
                   FVector HitLocation, FVector HitNormal,
